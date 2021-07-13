@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.20'
+    id 'application'
+}
+
+group 'info.skyblond.teerfeb.backend'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'info.skyblond.teerfeb.backend.Main'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'io.javalin:javalin:3.13.9'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.5'
+
+    implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-beta7'
+    implementation 'org.nd4j:nd4j-native:1.0.0-beta7'
+    implementation 'org.nd4j:nd4j-native:1.0.0-beta7:windows-x86_64-avx2'
+}
+
+test {
+    useJUnitPlatform()
+}
