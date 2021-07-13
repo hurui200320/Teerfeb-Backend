@@ -1,6 +1,7 @@
 package info.skyblond.teerfeb.backend
 
 import io.javalin.Javalin
+import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.BadRequestResponse
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
@@ -31,20 +32,28 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         val app = initJavalin()
+        app.routes {
+            path("api") {
+                post("xray") { ctx ->
+                    val imageStream = ctx.uploadedFile("pic") ?: throw BadRequestResponse("No pic uploaded")
+                    val bufferedImage = ImageIO.read(imageStream.content)
 
-        app.post("/xray") { ctx ->
-            val imageStream = ctx.uploadedFile("pic") ?: throw BadRequestResponse("No pic uploaded")
-            val bufferedImage = ImageIO.read(imageStream.content)
+                    val (result, inputImage) = XrayModel.processPic(bufferedImage)
+                    ctx.json(
+                        mapOf(
+                            "covid" to result[0],
+                            "normal" to result[1],
+                            "viral" to result[2],
+                            "image" to imgToBase64String(inputImage)
+                        )
+                    )
+                }
+                
+                post("alert") {ctx -> ctx.json(emptyMap<String, Any>())}
 
-            val (result, inputImage) = XrayModel.processPic(bufferedImage)
-            ctx.json(
-                mapOf(
-                    "covid" to result[0],
-                    "normal" to result[1],
-                    "viral" to result[2],
-                    "image" to imgToBase64String(inputImage)
-                )
-            )
+                get("view-data") {ctx -> ctx.json(emptyList<Any>())}
+            }
         }
+
     }
 }
