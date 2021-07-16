@@ -24,10 +24,8 @@ import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler
 import org.nd4j.linalg.learning.config.Adam
 import org.nd4j.linalg.lossfunctions.LossFunctions
 import org.slf4j.LoggerFactory
-import java.awt.image.BufferedImage
 import java.io.File
 import java.util.*
-import javax.imageio.ImageIO
 
 /**
  * DataSet:

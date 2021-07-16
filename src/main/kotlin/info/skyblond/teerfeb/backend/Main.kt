@@ -74,6 +74,9 @@ object Main {
                 }
 
                 path("covid") {
+                    get("continent") { ctx ->
+                        ctx.json(CovidDistributionModel.continentToLocationIndex.keys)
+                    }
                     get("locations") { ctx ->
                         val continent = ctx.queryParam<String>("continent").getOrNull()?.lowercase()
                         if (continent.isNullOrBlank()) {
@@ -81,34 +84,32 @@ object Main {
                             ctx.json(CovidDistributionModel.locationToContinentIndex.keys)
                         } else {
                             // return this continent
-                            ctx.json(CovidDistributionModel.continentToLocationIndex[continent] ?: emptyList<String>())
+                            ctx.json(
+                                continent.split(",").flatMap {
+                                    CovidDistributionModel.continentToLocationIndex[it] ?: emptyList()
+                                }
+                            )
                         }
                     }
-                    get("dates") { ctx ->
-                        val year = ctx.queryParam<Int>("year").getOrNull()
-                        val month = ctx.queryParam<Int>("month").getOrNull()
-                        val day = ctx.queryParam<Int>("day").getOrNull()
-
+                    get("date") { ctx ->
                         ctx.json(
-                            CovidDistributionModel.sortedDateIndex
-                                .filter { year == null || it.year == year }
-                                .filter { month == null || it.monthValue == month }
-                                .filter { day == null || it.dayOfMonth == day }
+                            mapOf(
+                                "max" to CovidDistributionModel.sortedDateIndex.last(),
+                                "min" to CovidDistributionModel.sortedDateIndex.first(),
+                            )
                         )
                     }
                     get("distribution") { ctx ->
-                        val continent = ctx.queryParam<String>("continent").getOrNull()?.lowercase()
-                        val location = ctx.queryParam<String>("location").getOrNull()?.lowercase()
-                        val year = ctx.queryParam<Int>("year").getOrNull()
-                        val month = ctx.queryParam<Int>("month").getOrNull()
-                        val day = ctx.queryParam<Int>("day").getOrNull()
+                        val location = ctx.queryParam<String>("location").get().lowercase().split(",")
+                        val year = ctx.queryParam<Int>("year").get()
+                        val month = ctx.queryParam<Int>("month").get()
+                        val day = ctx.queryParam<Int>("day").get()
                         ctx.json(
                             CovidDistributionModel.data
-                                .filter { continent == null || it.continent.lowercase() == continent }
-                                .filter { location == null || it.location.lowercase() == location }
-                                .filter { year == null || it.date.year == year }
-                                .filter { month == null || it.date.monthValue == month }
-                                .filter { day == null || it.date.dayOfMonth == day }
+                                .filter { it.location.lowercase() in location }
+                                .filter { it.date.year == year }
+                                .filter { it.date.monthValue == month }
+                                .filter { it.date.dayOfMonth == day }
                         )
                     }
                 }

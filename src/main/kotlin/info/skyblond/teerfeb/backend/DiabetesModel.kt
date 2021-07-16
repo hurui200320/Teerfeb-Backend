@@ -4,9 +4,6 @@ import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize
 import org.nd4j.linalg.dataset.api.preprocessor.serializer.NormalizerSerializer
 import org.nd4j.linalg.factory.Nd4j
-import java.awt.Color
-import java.awt.Image
-import java.awt.image.BufferedImage
 import java.io.File
 
 object DiabetesModel {

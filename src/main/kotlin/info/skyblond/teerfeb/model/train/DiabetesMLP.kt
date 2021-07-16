@@ -15,13 +15,11 @@ import org.nd4j.linalg.activations.Activation
 import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize
 import org.nd4j.linalg.dataset.api.preprocessor.serializer.NormalizerSerializer
 import org.nd4j.linalg.factory.Nd4j
-import org.nd4j.linalg.learning.config.Adam
 import org.nd4j.linalg.learning.config.Nesterovs
 import org.nd4j.linalg.lossfunctions.LossFunctions
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.charset.StandardCharsets
-import java.util.*
 
 /**
  * https://www.kaggle.com/uciml/pima-indians-diabetes-database

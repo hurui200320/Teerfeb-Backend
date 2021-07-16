@@ -16,7 +16,7 @@ application {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
@@ -29,7 +29,7 @@ dependencies {
 
     implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-beta7'
     implementation 'org.nd4j:nd4j-native:1.0.0-beta7'
-    implementation 'org.nd4j:nd4j-native:1.0.0-beta7:windows-x86_64-avx2'
+    implementation 'org.nd4j:nd4j-native-platform:1.0.0-beta7'
 }
 
 test {
