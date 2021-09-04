@@ -13,14 +13,13 @@ import javax.imageio.ImageIO
 
 
 object Main {
-
     private fun initJavalin(): Javalin {
         JavalinJackson.getObjectMapper()
             .findAndRegisterModules()
 
         return Javalin.create { config ->
             config.enableCorsForAllOrigins()
-        }.start(7000)
+        }.start(8080)
     }
 
     private fun imgToBase64String(img: BufferedImage): String {
