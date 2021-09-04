@@ -19,7 +19,7 @@ object Main {
 
         return Javalin.create { config ->
             config.enableCorsForAllOrigins()
-        }.start(8080)
+        }.start(80)
     }
 
     private fun imgToBase64String(img: BufferedImage): String {

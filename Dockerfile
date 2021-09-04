@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk11
-EXPOSE 8080
+EXPOSE 80
 RUN mkdir /opt/app
 COPY models /opt/app/models
 COPY build/install/Teerfeb-Backend /opt/app
